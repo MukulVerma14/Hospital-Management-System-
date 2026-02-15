@@ -1,14 +1,14 @@
 package com.example.hms.service;
 
-import com.example.hms.models.Patient;
+import com.example.hms.models.Doctor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PatientService {
+public class DoctorService {
 
-    public List<Patient> getAllPatients() {
+    public List<Doctor> getAllDoctors() {
         try{
             System.out.println("into service layer");
             return null;
@@ -18,7 +18,7 @@ public class PatientService {
         }
     }
 
-    public Patient getPatientById(Long id) {
+    public Doctor getDoctorById(Long id) {
         try {
             return null;
         } catch(Exception e){
@@ -27,7 +27,7 @@ public class PatientService {
         }
     }
 
-    public Patient createPatient(Patient patient) {
+    public Doctor createDoctor(Doctor doctor) {
         try {
             return null;
         } catch(Exception e){
@@ -36,7 +36,7 @@ public class PatientService {
         }
     }
 
-    public void deletePatient(Long id) {
+    public void deleteDoctor(Long id) {
         try {
 
         }catch(Exception e){
@@ -44,7 +44,7 @@ public class PatientService {
         }
     }
 
-    public Patient updatePatient(Long id) {
+    public Doctor updateDoctor(Long id) {
         try {
             return null;
         } catch(Exception e){
@@ -52,5 +52,4 @@ public class PatientService {
             return null;
         }
     }
-
 }

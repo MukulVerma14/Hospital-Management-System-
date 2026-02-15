@@ -1,6 +1,8 @@
 package com.example.hms.controllers;
 
 import com.example.hms.models.Doctor;
+import com.example.hms.service.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,32 +11,36 @@ import java.util.List;
 @RequestMapping("/api/v1/doctors")
 public class DoctorController {
 
+    @Autowired
+    private DoctorService doctorService;
+
     @GetMapping
     public List<Doctor> getAllDoctors() {
         System.out.println("Fetching all doctors");
-        return null;
+        return doctorService.getAllDoctors();
     }
 
     @PostMapping
     public Doctor createDoctor(@RequestBody Doctor doctor) {
         System.out.println("Creating doctor");
-        return null;
+        return doctorService.createDoctor(doctor);
     }
 
     @GetMapping("/id")
     public Doctor getDoctorById(@PathVariable Long id) {
         System.out.println("Fetching doctor by id");
-        return null;
+        return doctorService.getDoctorById(id);
     }
 
     @DeleteMapping("/id")
     public void deleteDoctorById(@PathVariable Long id) {
         System.out.println("Deleting doctor by id");
+        doctorService.deleteDoctor(id);
     }
 
     @PutMapping("/id")
-    public Doctor updateDoctorById(@RequestBody Doctor doctor) {
+    public void updateDoctorById(@PathVariable Long id) {
         System.out.println("Updating doctor by id");
-        return null;
+        doctorService.updateDoctor(id);
     }
 }
