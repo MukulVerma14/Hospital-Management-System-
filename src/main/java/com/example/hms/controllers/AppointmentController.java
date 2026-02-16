@@ -40,8 +40,8 @@ public class AppointmentController {
     }
 
     @PutMapping("/id")
-    public void updateAppointment(@PathVariable Long id) {
+    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointment) {
         System.out.println("Updating appointment by id" + id);
-        appointmentService.updateAppointment(id);
+        return appointmentService.updateAppointment(id, appointment);
     }
 }

@@ -1,21 +1,27 @@
 package com.example.hms.service;
 
 import com.example.hms.models.Patient;
+import com.example.hms.repository.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientService {
 
     private static final Logger logger = LoggerFactory.getLogger(PatientService.class);
 
+    @Autowired
+    private PatientRepository patientRepository;
+
     public List<Patient> getAllPatients() {
         try{
             System.out.println("into service layer");
-            return null;
+            return  patientRepository.findAll();
         }catch(Exception e){
             System.out.println("Error messsage:" +  e.getMessage());
             logger.error("An error occured while fetching all patients : {}", e.getMessage());
@@ -25,7 +31,8 @@ public class PatientService {
 
     public Patient getPatientById(Long id) {
         try {
-            return null;
+            Optional<Patient> patient = patientRepository.findById(id);
+            return patient.orElse(null);
         } catch(Exception e){
             System.out.println("Error messsage:" +  e.getMessage());
             logger.error("An error occured while fetching patient with Id {} : {}", id, e.getMessage());
@@ -35,7 +42,8 @@ public class PatientService {
 
     public Patient createPatient(Patient patient) {
         try {
-            return null;
+            patientRepository.save(patient);
+            return patient;
         } catch(Exception e){
             System.out.println("Error messsage:" +  e.getMessage());
             logger.error("An error occured while creating patient : {}", e.getMessage());
@@ -45,16 +53,29 @@ public class PatientService {
 
     public void deletePatient(Long id) {
         try {
-
+            logger.info("deleting patient with id {}", id);
+            patientRepository.deleteById(id);
         }catch(Exception e){
             System.out.println("Error messsage:" +  e.getMessage());
             logger.error("An error occured while deleting patient with Id {} : {}", id, e.getMessage());
         }
     }
 
-    public Patient updatePatient(Long id) {
+    public Patient updatePatient(Long id,  Patient updatedPatient) {
         try {
-            return null;
+            Optional<Patient> existingPatient = patientRepository.findById(id);
+            if(existingPatient.isPresent()) {
+                Patient p = existingPatient.get();
+                p.setName(updatedPatient.getName());
+                p.setAge(updatedPatient.getAge());
+                p.setGender(updatedPatient.getGender());
+                patientRepository.save(p);
+
+                return updatedPatient;
+            }else {
+                logger.error("Patient with id {} not found", id);
+                return null;
+            }
         } catch(Exception e){
             System.out.println("Error messsage:" +  e.getMessage());
             logger.error("An error occured while updating patient with Id {} : {}", id, e.getMessage());
